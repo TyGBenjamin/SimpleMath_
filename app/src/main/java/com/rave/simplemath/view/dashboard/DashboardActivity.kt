@@ -39,6 +39,7 @@ class DashboardActivity : ComponentActivity() {
                         }
                     ) {
                         Text(getString(R.string.sum))
+                        // test
                     }
                 }
             }
