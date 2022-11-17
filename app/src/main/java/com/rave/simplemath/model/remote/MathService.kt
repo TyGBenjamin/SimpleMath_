@@ -11,5 +11,5 @@ import retrofit2.http.Query
 interface MathService {
 
     @GET(".")
-    suspend fun evaluateExpression(@Query("expr", encoded = false) expr: String): Int
+    suspend fun evaluateExpression(@Query("expr", encoded = false) expr: String): Double
 }

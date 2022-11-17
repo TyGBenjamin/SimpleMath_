@@ -30,7 +30,10 @@
         </activity>
 
 
-        <activity android:name=".view.sum.SumActivity" />
+        <activity android:name=".view.operations.SumActivity" />
+        <activity android:name=".view.operations.MinusActivity" />
+        <activity android:name=".view.operations.MultiplyActivity" />
+        <activity android:name=".view.operations.DivideActivity" />
     </application>
 
 </manifest>
