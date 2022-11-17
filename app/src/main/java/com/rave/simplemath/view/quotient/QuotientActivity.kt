@@ -3,7 +3,6 @@ package com.rave.simplemath.view.quotient
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -19,8 +18,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -34,16 +31,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.rave.simplemath.R
 import com.rave.simplemath.ui.theme.SimpleMathTheme
-import com.rave.simplemath.viewmodel.DifferenceViewModel
-import com.rave.simplemath.viewmodel.QuotientViewModel
 import com.rave.simplemath.viewmodel.SumViewModel
 
 class QuotientActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val quotientViewModel: QuotientViewModel by viewModels()
+        val quotientViewModel: SumViewModel by viewModels()
         setContent {
             val equationState = quotientViewModel.equationState.collectAsState().value
             if(equationState!=0.0){
@@ -75,7 +69,7 @@ class QuotientActivity: ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun QuotientScreen(quotientViewModel: QuotientViewModel, equationState: Double){
+fun QuotientScreen(quotientViewModel: SumViewModel, equationState: Double){
     val activity = LocalContext.current as? Activity
 
     Column(verticalArrangement = Arrangement.Center,

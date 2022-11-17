@@ -11,7 +11,7 @@ class SumViewModel: ViewModel() {
 
     val repo = MathRepo
 
-    val _equation: MutableStateFlow<Double> = MutableStateFlow(0.0)
+    private val _equation: MutableStateFlow<Double> = MutableStateFlow(0.0)
     val equationState: StateFlow<Double> get() = _equation
 
 

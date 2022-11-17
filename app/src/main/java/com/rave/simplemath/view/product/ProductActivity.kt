@@ -28,17 +28,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.rave.simplemath.ui.theme.SimpleMathTheme
-import com.rave.simplemath.viewmodel.ProductViewModel
 import com.rave.simplemath.viewmodel.SumViewModel
 
 class ProductActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val productViewModel: ProductViewModel by viewModels()
+        val productViewModel: SumViewModel by viewModels()
         setContent {
             val equationState = productViewModel.equationState.collectAsState().value
             if(equationState!=0.0){
@@ -73,7 +71,7 @@ class ProductActivity: ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProductScreen(productViewModel: ProductViewModel, equationState: Double){
+fun ProductScreen(productViewModel: SumViewModel, equationState: Double){
 
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally) {
