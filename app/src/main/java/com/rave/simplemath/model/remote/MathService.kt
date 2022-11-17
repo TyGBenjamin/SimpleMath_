@@ -1,6 +1,5 @@
 package com.rave.simplemath.model.remote
 
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -12,7 +11,5 @@ import retrofit2.http.Query
 interface MathService {
 
     @GET(".")
-//    suspend fun evaluateExpression(@Query("expr", encoded = true) expr: String): String
-//    suspend fun evaluateExpression(@Query("expr") expr: String): Response<Any>
     suspend fun evaluateExpression(@Query("expr") expr: String): String
 }

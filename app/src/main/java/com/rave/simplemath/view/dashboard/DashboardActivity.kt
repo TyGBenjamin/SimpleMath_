@@ -2,12 +2,10 @@ package com.rave.simplemath.view.dashboard
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.viewModels
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
@@ -54,12 +52,7 @@ class DashboardActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val resultString = intent.getStringExtra("result")
         val context = this
-        fun startNewAct(sumClass: Class<*>) {
-            val sumIntent = Intent(this, SumActivity::class.java)
-            exprResult.launch(sumIntent)
-        }
         setContent {
             SimpleMathTheme {
                 val exprStringDesplay: String by dashboardViewModel.dashboardState.collectAsState()
@@ -70,13 +63,11 @@ class DashboardActivity : ComponentActivity() {
                     Column() {
                         Box(
                             modifier = Modifier
-                                .border(
-                                    BorderStroke(2.dp, Color.LightGray)
-                                )
+                                .border(BorderStroke(2.dp, Color.LightGray))
                                 .fillMaxWidth()
                         ) {
                             Text(
-                                text = "${exprStringDesplay}",
+                                text = exprStringDesplay,
                                 fontSize = 64.sp,
                                 textAlign = TextAlign.Center
                             )
@@ -91,9 +82,7 @@ class DashboardActivity : ComponentActivity() {
                                 // 2) Start new activity with expect data comes back
                                 exprResult.launch(sumIntent)
                             }
-                        ) {
-                            Text(getString(R.string.sum))
-                        }
+                        ) { Text(getString(R.string.sum)) }
                         Button(
                             modifier = Modifier.size(200.dp, 150.dp),
                             onClick = {
@@ -101,27 +90,21 @@ class DashboardActivity : ComponentActivity() {
                                     Intent(context, SubtractionActivity::class.java)
                                 exprResult.launch(subractionIntent)
                             }
-                        ) {
-                            Text(getString(R.string.subtraction))
-                        }
+                        ) { Text(getString(R.string.subtraction)) }
                         Button(
                             modifier = Modifier.size(200.dp, 150.dp),
                             onClick = {
                                 val multIntent = Intent(context, MultiplyActivity::class.java)
                                 exprResult.launch(multIntent)
                             }
-                        ) {
-                            Text(getString(R.string.multiply))
-                        }
+                        ) { Text(getString(R.string.multiply)) }
                         Button(
                             modifier = Modifier.size(200.dp, 150.dp),
                             onClick = {
                                 val multIntent = Intent(context, DivideActivity::class.java)
                                 exprResult.launch(multIntent)
                             }
-                        ) {
-                            Text(getString(R.string.divide))
-                        }
+                        ) { Text(getString(R.string.divide)) }
                     }
                 }
             }

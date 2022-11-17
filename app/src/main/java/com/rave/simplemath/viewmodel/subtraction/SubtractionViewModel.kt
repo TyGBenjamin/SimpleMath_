@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
  *
  * @constructor Create empty Subtraction view model
  */
-class SubtractionViewModel() : ViewModel() {
+class SubtractionViewModel : ViewModel() {
     private val _subtractionState: MutableStateFlow<SubtractionState> = MutableStateFlow(
         SubtractionState()
     )
@@ -47,9 +47,9 @@ class SubtractionViewModel() : ViewModel() {
      *
      */
     fun subtactNumbers() {
-        _subtractionState.update {state -> state.copy(isEvaluating = true) }
+        _subtractionState.update { state -> state.copy(isEvaluating = true) }
         viewModelScope.launch {
-            val expr: String = _subtractionState.value.run {"$num1-$num2"}
+            val expr: String = _subtractionState.value.run { "$num1-$num2" }
             val result: String = MathRepo.evaluateExpression(expr)
             _subtractionState.update { state -> state.copy(isEvaluating = false, result = result) }
         }

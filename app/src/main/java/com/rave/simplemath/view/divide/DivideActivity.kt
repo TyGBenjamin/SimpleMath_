@@ -15,7 +15,12 @@ import com.rave.simplemath.utils.GetExprResult
 import com.rave.simplemath.view.common.CalculationKeypad
 import com.rave.simplemath.viewmodel.divide.DivideViewModel
 
-class DivideActivity: ComponentActivity() {
+/**
+ * Divide activity.
+ *
+ * @constructor Create empty Divide activity
+ */
+class DivideActivity : ComponentActivity() {
 
     private val divideViewModel by viewModels<DivideViewModel>()
 
@@ -27,7 +32,7 @@ class DivideActivity: ComponentActivity() {
                 Surface(
                     color = MaterialTheme.colorScheme.inversePrimary
                 ) {
-                    CalculationKeypad (
+                    CalculationKeypad(
                         numInput1 = state.num1,
                         numInput2 = state.num2,
                         buttonText = getString(R.string.multiply),
@@ -47,5 +52,4 @@ class DivideActivity: ComponentActivity() {
             }
         }
     }
-
 }

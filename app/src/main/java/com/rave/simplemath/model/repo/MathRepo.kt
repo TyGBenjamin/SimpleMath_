@@ -1,6 +1,5 @@
 package com.rave.simplemath.model.repo
 
-import android.util.Log
 import com.rave.simplemath.model.remote.MathService
 import com.rave.simplemath.model.remote.RetrofitObject
 

@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
  *
  * @constructor Create empty Divide view model
  */
-class DivideViewModel: ViewModel() {
+class DivideViewModel : ViewModel() {
     private val _divideState: MutableStateFlow<DivideState> = MutableStateFlow(DivideState())
     val divideState: StateFlow<DivideState> get() = _divideState.asStateFlow()
 

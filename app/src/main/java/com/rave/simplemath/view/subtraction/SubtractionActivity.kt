@@ -3,7 +3,6 @@ package com.rave.simplemath.view.subtraction
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -17,6 +16,11 @@ import com.rave.simplemath.utils.GetExprResult
 import com.rave.simplemath.view.common.CalculationKeypad
 import com.rave.simplemath.viewmodel.subtraction.SubtractionViewModel
 
+/**
+ * Subtraction activity.
+ *
+ * @constructor Create empty Subtraction activity
+ */
 class SubtractionActivity : ComponentActivity() {
     private val subtractionViewModel by viewModels<SubtractionViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {

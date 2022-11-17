@@ -16,6 +16,11 @@ import com.rave.simplemath.utils.GetExprResult
 import com.rave.simplemath.view.common.CalculationKeypad
 import com.rave.simplemath.viewmodel.multiply.MultiplyViewModel
 
+/**
+ * Multiply activity.
+ *
+ * @constructor Create empty Multiply activity
+ */
 class MultiplyActivity : ComponentActivity() {
 
     private val multiplyViewModel by viewModels<MultiplyViewModel>()
@@ -28,7 +33,7 @@ class MultiplyActivity : ComponentActivity() {
                 Surface(
                     color = MaterialTheme.colorScheme.primary
                 ) {
-                    CalculationKeypad (
+                    CalculationKeypad(
                         numInput1 = state.num1,
                         numInput2 = state.num2,
                         buttonText = getString(R.string.multiply),
@@ -38,7 +43,7 @@ class MultiplyActivity : ComponentActivity() {
                         buttonClicked = multiplyViewModel::multiplyNumbers
                     )
                     if (state.result.isNotEmpty()) {
-                        //todo - understand what this is doing
+                        // understand what this is doing
                         val fullExpr = state.run { "$num1 * $num2 = $result" }
                         // because this isn't working
 //                        val fullExpr = {"${state.num1} * ${state.num2} = ${state.result}"}
@@ -51,5 +56,4 @@ class MultiplyActivity : ComponentActivity() {
             }
         }
     }
-
 }

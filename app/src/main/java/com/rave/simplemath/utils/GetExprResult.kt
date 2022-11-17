@@ -4,6 +4,11 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 
+/**
+ * Get expr result.
+ *
+ * @constructor Create empty Get expr result
+ */
 class GetExprResult : ActivityResultContract<Intent, String>() {
     override fun createIntent(context: Context, input: Intent): Intent = input
 
@@ -15,4 +20,3 @@ class GetExprResult : ActivityResultContract<Intent, String>() {
         const val RESULT = "ExprResult"
     }
 }
-
