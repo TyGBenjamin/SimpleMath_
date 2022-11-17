@@ -4,6 +4,7 @@ import com.rave.simplemath.model.repo.MathRepo
 import com.rave.simplemath.utilTest.CoroutinesTestExtension
 import io.mockk.coEvery
 import io.mockk.mockkObject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
 
+@OptIn(ExperimentalCoroutinesApi::class)
 internal class OperatorViewModelTest {
 
     @RegisterExtension
@@ -25,7 +27,37 @@ internal class OperatorViewModelTest {
     }
 
     @Test
-    @DisplayName("Testing all expressions can be evaluated. Also test number setters")
+    @DisplayName("Testing input validator")
+    fun testValidator() = runTest(extension.testDispatcher) {
+        val viewModel = OperatorViewModel("+")
+
+        Assertions.assertTrue(viewModel.validateNumber("14255"))
+        Assertions.assertTrue(viewModel.validateNumber(""))
+        Assertions.assertFalse(viewModel.validateNumber("1.0"))
+        Assertions.assertFalse(viewModel.validateNumber("-1"))
+        Assertions.assertFalse(viewModel.validateNumber("dfsa"))
+    }
+
+    @Test
+    @DisplayName("Testing setting numbers")
+    fun testNumSetter() = runTest(extension.testDispatcher) {
+        val viewModel = OperatorViewModel("-")
+        viewModel.setFirstNum("1")
+        viewModel.setSecNum("1")
+        Assertions.assertEquals(viewModel.sumState.value.num1, "1")
+        Assertions.assertEquals(viewModel.sumState.value.num2, "1")
+        viewModel.setFirstNum("4.")
+        viewModel.setSecNum("3.")
+        Assertions.assertEquals(viewModel.sumState.value.num1, "1")
+        Assertions.assertEquals(viewModel.sumState.value.num2, "1")
+        viewModel.setFirstNum("21")
+        viewModel.setSecNum("21")
+        Assertions.assertEquals(viewModel.sumState.value.num1, "21")
+        Assertions.assertEquals(viewModel.sumState.value.num2, "21")
+    }
+
+    @Test
+    @DisplayName("Testing all expressions can be evaluated")
     fun testEvaluateExpression() = runTest(extension.testDispatcher) {
         // Given
         val operatorList = listOf("+", "-", "*", "/")
@@ -55,17 +87,5 @@ internal class OperatorViewModelTest {
             // Then
             Assertions.assertEquals(result, testResult)
         }
-    }
-
-    @Test
-    @DisplayName("Test validator")
-    fun testValidator() = runTest(extension.testDispatcher) {
-        val viewModel = OperatorViewModel("+")
-
-        Assertions.assertTrue(viewModel.validateNumber("14255"))
-        Assertions.assertTrue(viewModel.validateNumber(""))
-        Assertions.assertFalse(viewModel.validateNumber("1.0"))
-        Assertions.assertFalse(viewModel.validateNumber("-1"))
-        Assertions.assertFalse(viewModel.validateNumber("dfsa"))
     }
 }

@@ -14,6 +14,7 @@ import retrofit2.create
  */
 object RetrofitObject {
     // Example: http://api.mathjs.org/v4/?expr=2%2B2
+    // SHOULD HAVE ADDED "s" TO "http" INSTEAD OF ADDING CLEARTEXT TO MANIFEST
     private const val BASE_URL = "http://api.mathjs.org/"
     private const val VERSION = "v4/"
     private val contentType: MediaType = MediaType.get("application/json")

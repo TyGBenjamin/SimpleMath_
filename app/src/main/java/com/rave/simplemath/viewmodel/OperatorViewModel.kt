@@ -29,7 +29,7 @@ class OperatorViewModel(
      * @param num string number input
      */
     fun setFirstNum(num: String) {
-        _sumState.update { it.copy(num1 = num) }
+        if (validateNumber(num)) _sumState.update { it.copy(num1 = num) }
     }
 
     /**
@@ -38,7 +38,7 @@ class OperatorViewModel(
      * @param num string number input
      */
     fun setSecNum(num: String) {
-        _sumState.update { it.copy(num2 = num) }
+        if (validateNumber(num)) _sumState.update { it.copy(num2 = num) }
     }
 
     /**

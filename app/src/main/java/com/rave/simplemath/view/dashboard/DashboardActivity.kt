@@ -37,8 +37,6 @@ class DashboardActivity : ComponentActivity() {
         var activityResultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
-            // There are no request codes
-            // viewmodelsetstate
             viewModel.setResult(result.data!!.getStringExtra("result")!!)
         }
         fun openActivityForResult(operationClass: Class<*>) {
