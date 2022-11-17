@@ -63,7 +63,7 @@ class OperatorViewModel(
      * @return true if all numbers
      */
     fun validateNumber(input: String): Boolean {
-        return input.all { it.isDigit() }
+        return input.all { it.isDigit() } || input == ""
     }
 }
 
