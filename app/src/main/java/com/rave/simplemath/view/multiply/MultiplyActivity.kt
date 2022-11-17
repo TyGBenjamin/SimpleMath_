@@ -104,14 +104,11 @@ class MultiplyActivity : ComponentActivity() {
                                             viewModel.evaluateMultiplyExpression(x = value, y = value2)
                                         println("ANSWER FROM API IS $sumAnswer")
                                     }
-
-                                    println("HEREEEEE is and $value $value2")
-
+                                    val result = (value.toInt()*value2.toInt()).toString()
 
                                     Toast.makeText(
                                         context,
-                                        "$value + $value2 =" +
-                                                "$mulstring",
+                                        "$value * $value2 = $result",
                                         Toast.LENGTH_SHORT
                                     ).show()
 //                                    finish()

@@ -99,16 +99,12 @@ class DivideActivity : ComponentActivity() {
                                     lifecycleScope.launch {
                                         var sumAnswer =
                                             viewModel.evaluateDivExpression(x = value, y = value2)
-                                        println("ANSWER FROM API IS $sumAnswer")
                                     }
-
-                                    println("HEREEEEE is and $value $value2")
-
+                                    val result = (value.toInt() / value2.toInt())
 
                                     Toast.makeText(
                                         context,
-                                        "$value + $value2 =" +
-                                                "$divstring",
+                                        "$value / $value2 = $result",
                                         Toast.LENGTH_SHORT
                                     ).show()
 //                                    finish()

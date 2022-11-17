@@ -26,9 +26,11 @@ class DivideViewModel : ViewModel() {
      */
     suspend fun evaluateDivExpression(x: String, y: String) {
         viewModelScope.launch {
-            val mul: String = "$x/$y"
-            _result.value = repo.evaluateExpression(mul)
-            println("THIS IS VALUE OF FLOW ${repo.evaluateExpression(mul)}")
+            if (y.toInt() != 0) {
+                val mul: String = "$x/$y"
+                _result.value = repo.evaluateExpression(mul)
+                println("THIS IS VALUE OF FLOW ${repo.evaluateExpression(mul)}")
+            }
         }
     }
 }

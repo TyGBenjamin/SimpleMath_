@@ -92,9 +92,10 @@ class SubtractActivity : ComponentActivity() {
                                     lifecycleScope.launch {
                                         viewModel.evaluateSubExpression(x = value, y = value2)
                                     }
+                                    val result = (value.toInt()- value2.toInt()).toString()
                                     Toast.makeText(
                                         context,
-                                        "$value - $value2 = $substring",
+                                        "$value - $value2 = $result",
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }

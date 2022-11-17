@@ -102,12 +102,11 @@ class SumActivity : ComponentActivity() {
                                     }
 
                                     println("HEREEEEE is and $value $value2")
-
+                                    val result = (value.toInt()+value2.toInt()).toString()
 
                                     Toast.makeText(
                                         context,
-                                        "$value + $value2 =" +
-                                                "$sumstring",
+                                        "$value + $value2 = $result",
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }
