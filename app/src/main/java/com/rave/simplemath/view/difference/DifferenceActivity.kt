@@ -1,5 +1,7 @@
 package com.rave.simplemath.view.difference
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -29,12 +31,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.rave.simplemath.R
 import com.rave.simplemath.ui.theme.SimpleMathTheme
 import com.rave.simplemath.viewmodel.DifferenceViewModel
 import com.rave.simplemath.viewmodel.QuotientViewModel
+import com.rave.simplemath.viewmodel.SumViewModel
 
 class DifferenceActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +46,13 @@ class DifferenceActivity: ComponentActivity() {
         val differenceViewModel: DifferenceViewModel by viewModels()
         setContent {
             val equationState = differenceViewModel.equationState.collectAsState().value
+            if(equationState!=0.0){
+                var result = equationState
+                var expr = "$result"//"${textState.value} / ${secondTextState.value} = ${result}"
+                val resultIntent = Intent().putExtra( "expr result", expr)
+                setResult(Activity.RESULT_OK, resultIntent)
+                finish()
+            }
             SimpleMathTheme {
                 // A surface container using the 'background' color from the theme
                 Box(
@@ -55,7 +66,10 @@ class DifferenceActivity: ComponentActivity() {
                         ),
                     contentAlignment = Alignment.Center
                 ) {
-                    DifferenceScreen(differenceViewModel, equationState)
+                    DifferenceScreen(
+                        differenceViewModel,
+                        equationState
+                    )
                 }
             }
         }
@@ -86,13 +100,15 @@ fun DifferenceScreen(differenceViewModel: DifferenceViewModel, equationState: Do
                 modifier = Modifier.size(100.dp)
             )
         }
+
         Button(
             colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
             onClick = {
                 differenceViewModel.EvaluateExpression("${textState.value}-${secondTextState.value}")
+
             }
         ) {
-            Text(text = "Evaluate Difference")
+            Text(text = "Evaluate difference")
         }
         Text(text = "${equationState}")
     }

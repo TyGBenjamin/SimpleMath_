@@ -1,5 +1,7 @@
 package com.rave.simplemath.view.product
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -26,10 +28,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.rave.simplemath.ui.theme.SimpleMathTheme
 import com.rave.simplemath.viewmodel.ProductViewModel
+import com.rave.simplemath.viewmodel.SumViewModel
 
 class ProductActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +41,13 @@ class ProductActivity: ComponentActivity() {
         val productViewModel: ProductViewModel by viewModels()
         setContent {
             val equationState = productViewModel.equationState.collectAsState().value
+            if(equationState!=0.0){
+                var result = equationState
+                var expr = "$result"//"${textState.value} / ${secondTextState.value} = ${result}"
+                val resultIntent = Intent().putExtra( "expr result", expr)
+                setResult(Activity.RESULT_OK, resultIntent)
+                finish()
+            }
             SimpleMathTheme {
                 // A surface container using the 'background' color from the theme
                 Box(
@@ -49,7 +60,11 @@ class ProductActivity: ComponentActivity() {
                             )
                         ),
                     contentAlignment = Alignment.Center
-                ) {  ProductScreen(productViewModel, equationState)
+                ) {
+                    ProductScreen(
+                        productViewModel,
+                        equationState
+                    )
                 }
             }
         }
@@ -58,19 +73,15 @@ class ProductActivity: ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProductScreen(productViewModel: ProductViewModel, equationState: Double) {
+fun ProductScreen(productViewModel: ProductViewModel, equationState: Double){
 
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    Column(verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally) {
         val textState = remember { mutableStateOf("") }
         val secondTextState = remember { mutableStateOf("") }
-        Row(
-            horizontalArrangement = Arrangement.SpaceAround,
+        Row(horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
+            modifier = Modifier.fillMaxWidth()) {
             TextField(
                 value = textState.value,
                 onValueChange = { textState.value = it },
@@ -84,10 +95,12 @@ fun ProductScreen(productViewModel: ProductViewModel, equationState: Double) {
                 modifier = Modifier.size(100.dp)
             )
         }
+
         Button(
             colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
             onClick = {
                 productViewModel.EvaluateExpression("${textState.value}*${secondTextState.value}")
+
             }
         ) {
             Text(text = "Evaluate Product")

@@ -3,8 +3,11 @@ package com.rave.simplemath.view.dashboard
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,6 +38,15 @@ import com.rave.simplemath.view.sum.SumActivity
  * @constructor Create new instance of [DashboardActivity]
  */
 class DashboardActivity : ComponentActivity() {
+    val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val intent: Intent? = result.data
+            // Handle the Intent
+            val exprResult = intent?.getStringExtra("expr result")
+            Toast.makeText(this, exprResult, Toast.LENGTH_LONG).show()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -67,7 +79,7 @@ fun buttonFunction(){
                 // 1) Create new Explicit Intent passing in the Activity class reference to navigate too
                 val sumIntent = Intent(this@DashboardActivity, SumActivity::class.java)
                 // 2) Pass the intent into the startActivity function
-                startActivity(sumIntent)
+                startForResult.launch(sumIntent)
             }
         ) {
             Text(getString(R.string.sum))
@@ -78,7 +90,7 @@ fun buttonFunction(){
                 // 1) Create new Explicit Intent passing in the Activity class reference to navigate too
                 val differenceIntent = Intent(this@DashboardActivity, DifferenceActivity::class.java)
                 // 2) Pass the intent into the startActivity function
-                startActivity(differenceIntent)
+                startForResult.launch(differenceIntent)
             }
         ) {
             Text(getString(R.string.difference))
@@ -89,7 +101,7 @@ fun buttonFunction(){
                 // 1) Create new Explicit Intent passing in the Activity class reference to navigate too
                 val productIntent = Intent(this@DashboardActivity, ProductActivity::class.java)
                 // 2) Pass the intent into the startActivity function
-                startActivity(productIntent)
+                startForResult.launch(productIntent)
             }
         ) {
             Text("product")
@@ -100,7 +112,7 @@ fun buttonFunction(){
                 // 1) Create new Explicit Intent passing in the Activity class reference to navigate too
                 val quotientIntent = Intent(this@DashboardActivity, QuotientActivity::class.java)
                 // 2) Pass the intent into the startActivity function
-                startActivity( quotientIntent)
+                startForResult.launch(quotientIntent)
             }
         ) {
             Text("quotient")

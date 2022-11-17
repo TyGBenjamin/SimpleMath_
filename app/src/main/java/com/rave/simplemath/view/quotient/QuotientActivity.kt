@@ -1,5 +1,7 @@
 package com.rave.simplemath.view.quotient
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -29,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.rave.simplemath.R
@@ -43,6 +46,13 @@ class QuotientActivity: ComponentActivity() {
         val quotientViewModel: QuotientViewModel by viewModels()
         setContent {
             val equationState = quotientViewModel.equationState.collectAsState().value
+            if(equationState!=0.0){
+                var result = equationState
+                var expr = "$result"//"${textState.value} / ${secondTextState.value} = ${result}"
+                val resultIntent = Intent().putExtra( "expr result", expr)
+                setResult(Activity.RESULT_OK, resultIntent)
+                finish()
+            }
             SimpleMathTheme {
                 // A surface container using the 'background' color from the theme
                 Box(
@@ -66,6 +76,7 @@ class QuotientActivity: ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QuotientScreen(quotientViewModel: QuotientViewModel, equationState: Double){
+    val activity = LocalContext.current as? Activity
 
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally) {
@@ -87,10 +98,12 @@ fun QuotientScreen(quotientViewModel: QuotientViewModel, equationState: Double){
                 modifier = Modifier.size(100.dp)
             )
         }
+
         Button(
             colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
             onClick = {
                 quotientViewModel.EvaluateExpression("${textState.value}/${secondTextState.value}")
+
             }
         ) {
             Text(text = "Evaluate Quotient")

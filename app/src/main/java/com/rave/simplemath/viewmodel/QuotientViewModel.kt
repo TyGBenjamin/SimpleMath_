@@ -1,5 +1,6 @@
 package com.rave.simplemath.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rave.simplemath.model.repo.MathRepo
@@ -16,6 +17,8 @@ class QuotientViewModel: ViewModel() {
 
 
     fun EvaluateExpression(expr: String) = viewModelScope.launch {
+        Log.e("%%%%%%%%%","${equationState.value}")
         _equation.value = repo.evaluateExpression(expr)
+        Log.e("%%%%%%%%%","${equationState.value}")
     }
 }
