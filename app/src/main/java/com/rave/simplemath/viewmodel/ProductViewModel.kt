@@ -30,7 +30,7 @@ class ProductViewModel : ViewModel() {
         _product.update { it.copy(isLoading = true) }
         val expression = "$firstArg*$secondArg"
         val productResponse = MathRepo.evaluateExpression(expression, Dispatchers.IO)
-        _product.update { it.copy(isLoading = false, product = productResponse.toInt()) }
+        _product.update { it.copy(isLoading = false, product = productResponse) }
     }
 }
 

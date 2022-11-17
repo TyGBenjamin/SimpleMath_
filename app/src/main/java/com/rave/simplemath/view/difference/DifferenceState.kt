@@ -9,7 +9,7 @@ package com.rave.simplemath.view.difference
  * @constructor Create empty Difference state
  */
 data class DifferenceState(
-    val difference: Int? = null,
+    val difference: String = "",
     val isLoading: Boolean = false,
     val error: String = ""
 )

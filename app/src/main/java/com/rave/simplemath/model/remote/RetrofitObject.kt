@@ -17,10 +17,12 @@ object RetrofitObject {
     private const val BASE_URL = "https://api.mathjs.org/"
     private val contentType: MediaType = MediaType.get("application/json")
 
+    val json = Json { isLenient = true }
+
     @OptIn(ExperimentalSerializationApi::class)
     private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
-        .addConverterFactory(Json.asConverterFactory(contentType))
+        .addConverterFactory(json.asConverterFactory(contentType))
         .build()
 
     /**

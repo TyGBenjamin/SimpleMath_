@@ -9,7 +9,7 @@ package com.rave.simplemath.view.sum
  * @constructor Create empty Sum state
  */
 data class SumState(
-    val sum: Int? = null,
+    val sum: String = "",
     val isLoading: Boolean = false,
     val error: String = ""
 )

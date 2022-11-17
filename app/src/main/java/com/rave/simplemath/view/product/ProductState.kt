@@ -11,5 +11,5 @@ package com.rave.simplemath.view.product
 data class ProductState(
     val isLoading: Boolean = false,
     val error: String = "",
-    val product: Int? = null
+    val product: String = ""
 )

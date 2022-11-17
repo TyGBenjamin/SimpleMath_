@@ -45,11 +45,11 @@ class SumActivity : ComponentActivity() {
                         sumViewModel.getSum(firstArg, secondArg)
                     }
                     val sum = sumState.sum
-                    if (sum != null) {
+                    if (sum.isNotEmpty()) {
                         val expressionText = "$expr $sum"
 
                         val resultIntent = Intent().putExtra(
-                            DashboardActivity.EXPR_RESULT,
+                            DashboardActivity.RESULT,
                             expressionText
                         )
                         setResult(RESULT_OK, resultIntent)

@@ -29,13 +29,13 @@ internal class DifferenceViewModelTest {
     @DisplayName("Tests difference view model's state")
     fun testDifferenceViewModel() = runTest(extension.testDispatcher) {
         // given
-        val expected = 4.0
+        val expected = "4"
         coEvery { MathRepo.evaluateExpression("6-2", Dispatchers.IO) } coAnswers { expected }
         // when
         differenceVM.getDifference("6", "2")
         // then
         val result = differenceVM.difference.value
         assertFalse(result.isLoading)
-        assertEquals(expected.toInt(), result.difference)
+        assertEquals(expected, result.difference)
     }
 }

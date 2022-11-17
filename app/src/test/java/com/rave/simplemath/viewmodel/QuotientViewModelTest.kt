@@ -29,7 +29,7 @@ internal class QuotientViewModelTest {
     @DisplayName("Tests sum view model's state")
     fun testSumViewModel() = runTest(extension.testDispatcher) {
         // given
-        val expected = 4.0
+        val expected = "4.0"
         coEvery { MathRepo.evaluateExpression("8%2F2", Dispatchers.IO) } coAnswers { expected }
         // when
         quotientVM.getQuotient("8", "2")

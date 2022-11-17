@@ -28,13 +28,13 @@ import com.rave.simplemath.view.sum.SumActivity
  * @constructor Create new instance of [DashboardActivity]
  */
 class DashboardActivity : ComponentActivity() {
-    val startForResult = registerForActivityResult(
+    private val startForResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->
         if (result.resultCode == Activity.RESULT_OK) {
             val intent = result.data
             // Handle the Intent
-            val exprResult = intent?.getStringExtra(EXPR_RESULT) ?: ""
+            val exprResult = intent?.getStringExtra(RESULT) ?: ""
             Toast.makeText(this, exprResult, Toast.LENGTH_SHORT).show()
         }
     }
@@ -100,6 +100,6 @@ class DashboardActivity : ComponentActivity() {
         }
     }
     companion object {
-        const val EXPR_RESULT = "ExprResult"
+        const val RESULT = "ExprResult"
     }
 }

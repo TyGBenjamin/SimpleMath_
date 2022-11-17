@@ -48,11 +48,11 @@ class QuotientActivity : ComponentActivity() {
                         quotientViewModel.getQuotient(firstArg, secondArg)
                     }
                     val quotient = quotientState.quotient
-                    if (quotient != null) {
+                    if (quotient.isNotEmpty()) {
                         val expressionText = "$expr $quotient"
 
                         val resultIntent = Intent().putExtra(
-                            DashboardActivity.EXPR_RESULT,
+                            DashboardActivity.RESULT,
                             expressionText
                         )
                         setResult(RESULT_OK, resultIntent)

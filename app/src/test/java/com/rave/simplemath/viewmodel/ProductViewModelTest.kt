@@ -29,13 +29,13 @@ internal class ProductViewModelTest {
     @DisplayName("Tests product view model's state")
     fun testProductViewModel() = runTest(extension.testDispatcher) {
         // given
-        val expected = 4.0
+        val expected = "4"
         coEvery { MathRepo.evaluateExpression("2*2", Dispatchers.IO) } coAnswers { expected }
         // when
         productVM.getProduct("2", "2")
         // then
         val result = productVM.product.value
         assertFalse(result.isLoading)
-        assertEquals(expected.toInt(), result.product)
+        assertEquals(expected, result.product)
     }
 }

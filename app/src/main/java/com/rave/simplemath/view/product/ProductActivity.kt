@@ -44,11 +44,11 @@ class ProductActivity : ComponentActivity() {
                         productViewModel.getProduct(text1, text2)
                     }
                     val product = productState.product
-                    if (product != null) {
+                    if (product.isNotEmpty()) {
                         val expressionText = "$expr $product"
 
                         val resultIntent = Intent().putExtra(
-                            DashboardActivity.EXPR_RESULT,
+                            DashboardActivity.RESULT,
                             expressionText
                         )
                         setResult(RESULT_OK, resultIntent)

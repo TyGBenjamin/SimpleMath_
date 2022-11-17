@@ -20,7 +20,7 @@ object MathRepo {
      * @param context the thread to be used
      * @return evaluation from mathematical expression
      */
-    suspend fun evaluateExpression(expr: String, context: CoroutineDispatcher): Double = withContext(context) {
+    suspend fun evaluateExpression(expr: String, context: CoroutineDispatcher): String = withContext(context) {
         return@withContext service.evaluateExpression(expr)
     }
 }

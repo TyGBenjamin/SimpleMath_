@@ -44,11 +44,11 @@ class DifferenceActivity : ComponentActivity() {
                         differenceViewModel.getDifference(text1, text2)
                     }
                     val difference = differenceState.difference
-                    if (difference != null) {
+                    if (difference.isNotEmpty()) {
                         val expressionText = "$expr $difference"
 
                         val resultIntent = Intent().putExtra(
-                            DashboardActivity.EXPR_RESULT,
+                            DashboardActivity.RESULT,
                             expressionText
                         )
                         setResult(RESULT_OK, resultIntent)

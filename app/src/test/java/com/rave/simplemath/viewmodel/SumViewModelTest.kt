@@ -29,7 +29,7 @@ internal class SumViewModelTest {
     @DisplayName("Tests sum view model's state")
     fun testSumViewModel() = runTest(extension.testDispatcher) {
         // given
-        val expected = 4.0
+        val expected = "4"
         // %2B is the encoding for +
         coEvery { MathRepo.evaluateExpression("2%2B2", Dispatchers.IO) } coAnswers { expected }
         // when
@@ -37,6 +37,6 @@ internal class SumViewModelTest {
         // then
         val result = sumVM.sum.value
         assertFalse(result.isLoading)
-        assertEquals(expected.toInt(), result.sum)
+        assertEquals(expected, result.sum)
     }
 }

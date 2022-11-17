@@ -30,7 +30,7 @@ class DifferenceViewModel : ViewModel() {
         _difference.update { it.copy(isLoading = true) }
         val expression = "$firstArg-$secondArg"
         val differenceResponse = MathRepo.evaluateExpression(expression, Dispatchers.IO)
-        _difference.update { it.copy(isLoading = false, difference = differenceResponse.toInt()) }
+        _difference.update { it.copy(isLoading = false, difference = differenceResponse) }
     }
 }
 
