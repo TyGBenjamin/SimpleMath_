@@ -71,7 +71,6 @@ class DivideActivity : ComponentActivity() {
                             TextField(
                                 value = value,
                                 onValueChange = {
-                                    println(it)
                                     value = it
                                 },
                                 label = { Label2() },
@@ -80,7 +79,6 @@ class DivideActivity : ComponentActivity() {
                             TextField(
                                 value = value2,
                                 onValueChange = {
-                                    println(it)
                                     value2 = it
                                 },
                                 label = { Label2() },
@@ -107,7 +105,6 @@ class DivideActivity : ComponentActivity() {
                                 }
                             ) {
                                 Text(text = "Calculate")
-                                println(" SUMSTRING : $divstring")
                             }
                             Button(onClick = { finish() }) {
                                 Text( text = "MainScreen")

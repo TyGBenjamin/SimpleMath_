@@ -70,7 +70,6 @@ class SubtractActivity : ComponentActivity() {
                             TextField(
                                 value = value,
                                 onValueChange = {
-                                    println(it)
                                     value = it
                                 },
                                 label = { Label2() },
@@ -79,7 +78,6 @@ class SubtractActivity : ComponentActivity() {
                             TextField(
                                 value = value2,
                                 onValueChange = {
-                                    println(it)
                                     value2 = it
                                 },
                                 label = { Label2() },

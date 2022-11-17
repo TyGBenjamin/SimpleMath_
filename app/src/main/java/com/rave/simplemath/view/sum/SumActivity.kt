@@ -110,8 +110,6 @@ class SumActivity : ComponentActivity() {
                                 }
                             ) {
                                 Text(text = "Calculate")
-                                var sumstring = viewModel.result.collectAsState().value
-                                println(" SUMSTRING : $sumstring")
                             }
                             Button(onClick = { finish() }) {
                                 Text(text = "MainScreen")

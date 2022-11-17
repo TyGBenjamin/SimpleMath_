@@ -74,7 +74,6 @@ class MultiplyActivity : ComponentActivity() {
                             TextField(
                                 value = value,
                                 onValueChange = {
-                                    println(it)
                                     value = it
                                 },
                                 label = { Label2() },
@@ -83,7 +82,6 @@ class MultiplyActivity : ComponentActivity() {
                             TextField(
                                 value = value2,
                                 onValueChange = {
-                                    println(it)
                                     value2 = it
                                 },
                                 label = { Label2() },
@@ -98,7 +96,6 @@ class MultiplyActivity : ComponentActivity() {
                                     lifecycleScope.launch {
                                         var sumAnswer =
                                             viewModel.evaluateMultiplyExpression(x = value, y = value2)
-                                        println("ANSWER FROM API IS $sumAnswer")
                                     }
                                     val result = (value.toInt()*value2.toInt()).toString()
 
@@ -110,7 +107,6 @@ class MultiplyActivity : ComponentActivity() {
                                 }
                             ) {
                                 Text(text = "Calculate")
-                                println(" SUMSTRING : $mulstring")
                             }
                             Button(onClick = { finish() }) {
                                 Text( text = "MainScreen")
