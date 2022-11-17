@@ -18,6 +18,6 @@ object MathRepo {
      * @return evaluation from mathematical expression
      */
     suspend fun evaluateExpression(expr: String): String {
-        return service.evaluateExpression(expr)
+        return service.evaluateExpression(expr).toString()
     }
 }

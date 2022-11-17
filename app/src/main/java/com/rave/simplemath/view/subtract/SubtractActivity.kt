@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +16,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,34 +25,31 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
-import com.rave.simplemath.R
+import androidx.lifecycle.lifecycleScope
 import com.rave.simplemath.ui.theme.SimpleMathTheme
 import com.rave.simplemath.view.dashboard.Label2
-import com.rave.simplemath.view.multiply.MathScreen
-import com.rave.simplemath.viewmodel.MainViewModel
+import com.rave.simplemath.viewmodel.sub.SubtractViewModel
+import kotlinx.coroutines.launch
 
 /**
- * Subtract activity handles subtraction.
+ * Sum activity handles all addition operations.
  *
- * @constructor Create new instance of [SubtractActivity]
+ * @constructor Create new instance of [SumActivity]
  */
 class SubtractActivity : ComponentActivity() {
-    val viewModel = MainViewModel()
+    val viewModel = SubtractViewModel()
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             val context = LocalContext.current
-
-//            fun setResult(s:String, s2: String) = setResult(RESULT_OK,Intent().putExtra("Testing", "s s2"))
             SimpleMathTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
                     var value: String by remember {
                         mutableStateOf("")
                     }
@@ -88,27 +85,29 @@ class SubtractActivity : ComponentActivity() {
                                 label = { Label2() },
                                 modifier = Modifier.wrapContentSize()
                             )
-                            val bundle = Bundle()
-                            // passing the data into the bundle
-                            bundle.putString("key1", "$value,$value2")
+                            var substring = viewModel.result.collectAsState().value
                             Button(
                                 onClick = {
-                                    val result = setResult(
-                                        RESULT_OK, Intent()
-                                            .putExtra("Testing", "$value $value2")
-                                    )
-                                    println("HEREEEEE is $result")
-
+//                                    val addSum = viewModel.add(x=value, y = value2)
+                                    lifecycleScope.launch {
+                                        viewModel.evaluateSubExpression(x = value, y = value2)
+                                    }
                                     Toast.makeText(
                                         context,
-                                        "$value - $value2 =" +
-                                                "(${value.toInt()}-${value2.toInt()})",
+                                        "$value - $value2 = $substring",
                                         Toast.LENGTH_SHORT
                                     ).show()
-                                    finish()
                                 }
                             ) {
-                                Text(text = "Testing")
+                                Text(text = "Calculate")
+                                substring = viewModel.result.collectAsState().value
+                            }
+                            Button(onClick = { finish() }) {
+                                Text(text = "MainScreen")
+                                val result = setResult(
+                                    ComponentActivity.RESULT_OK, Intent()
+                                        .putExtra("Testing", substring)
+                                )
                             }
                         }
                     }
@@ -117,3 +116,4 @@ class SubtractActivity : ComponentActivity() {
         }
     }
 }
+

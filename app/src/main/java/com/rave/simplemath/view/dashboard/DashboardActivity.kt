@@ -33,7 +33,6 @@ import com.rave.simplemath.view.divide.DivideActivity
 import com.rave.simplemath.view.multiply.MultiplyActivity
 import com.rave.simplemath.view.subtract.SubtractActivity
 import com.rave.simplemath.view.sum.SumActivity
-import com.rave.simplemath.viewmodel.MainViewModel
 
 /**
  * Dashboard activity is the starting point of our SimpleMath Application.
@@ -43,22 +42,22 @@ import com.rave.simplemath.viewmodel.MainViewModel
 class DashboardActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val viewModel = MainViewModel()
         super.onCreate(savedInstanceState)
         setContent {
             SimpleMathTheme {
                 var displayResult: String by remember {
-                    mutableStateOf("")
+                    mutableStateOf("Result will show here")
                 }
+
                 val launcher =
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                         if (it.resultCode == Activity.RESULT_OK) {
                             println("THIS IS ${it.data?.getStringExtra("Testing")}")
                             displayResult = it.data?.getStringExtra("Testing")!!
+                            println("DISPLAY RESULT COULD BE ${displayResult.split(" ").toList()}")
                         }
                     }
                 val context = LocalContext.current
-                // A surface container using the 'background' color from the theme
                 Box(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
@@ -81,25 +80,15 @@ class DashboardActivity : ComponentActivity() {
                             }
                             Button(
                                 onClick = {
-                                    // Navigating to a new activity
-                                    // 1) Create new Explicit Intent passing in the Activity
-                                    // class reference to navigate too
                                     val mulIntent = Intent(context, MultiplyActivity::class.java)
-                                    // 2) Pass the intent into the startActivity function
-//                                    startActivity(mulIntent
                                     launcher.launch(mulIntent)
                                 }
                             ) {
                                 Text(text = "x", fontSize = 25.sp)
                             }
-
                             Button(
                                 onClick = {
-                                    // Navigating to a new activity
-                                    // 1) Create new Explicit Intent passing in the Activity
-                                    // class reference to navigate too
                                     val divIntent = Intent(context, DivideActivity::class.java)
-                                    // 2) Pass the intent into the startActivity function
                                     launcher.launch(divIntent)
                                 }
                             ) {
@@ -107,12 +96,7 @@ class DashboardActivity : ComponentActivity() {
                             }
                             Button(
                                 onClick = {
-                                    // Navigating to a new activity
-                                    // 1) Create new Explicit Intent passing in the Activity
-                                    // class reference to navigate too
                                     val subIntent = Intent(context, SubtractActivity::class.java)
-                                    // 2) Pass the intent into the startActivity function
-
                                     launcher.launch(subIntent)
                                 }
                             ) {
@@ -128,7 +112,7 @@ class DashboardActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(result:String) {
+fun MainScreen(result: String) {
     var value: String by remember {
         mutableStateOf("")
     }
@@ -144,7 +128,7 @@ fun MainScreen(result:String) {
 }
 
 @Composable
-fun Label(result:String = "Show Result") {
+fun Label(result: String = "Show Result") {
     Text(
         text = result
     )

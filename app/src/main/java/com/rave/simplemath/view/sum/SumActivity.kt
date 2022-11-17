@@ -5,11 +5,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
@@ -18,6 +16,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,12 +25,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import com.rave.simplemath.R
+import androidx.lifecycle.lifecycleScope
 import com.rave.simplemath.ui.theme.SimpleMathTheme
 import com.rave.simplemath.view.dashboard.Label2
-import com.rave.simplemath.view.multiply.MathScreen
-import com.rave.simplemath.viewmodel.MainViewModel
+import com.rave.simplemath.viewmodel.sum.SumViewModel
+import kotlinx.coroutines.launch
 
 /**
  * Sum activity handles all addition operations.
@@ -39,7 +37,7 @@ import com.rave.simplemath.viewmodel.MainViewModel
  * @constructor Create new instance of [SumActivity]
  */
 class SumActivity : ComponentActivity() {
-    val viewModel = MainViewModel()
+    val viewModel = SumViewModel()
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +45,6 @@ class SumActivity : ComponentActivity() {
         setContent {
             val context = LocalContext.current
 
-//            fun setResult(s:String, s2: String) = setResult(RESULT_OK,Intent().putExtra("Testing", "s s2"))
             SimpleMathTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -93,25 +90,38 @@ class SumActivity : ComponentActivity() {
                             val bundle = Bundle()
                             // passing the data into the bundle
                             bundle.putString("key1", "$value,$value2")
+                            var sumstring = viewModel.result.collectAsState().value
+
                             Button(
                                 onClick = {
-                                    val addSum = viewModel.add(x=value, y = value2)
-                                    val result = setResult(
-                                        ComponentActivity.RESULT_OK, Intent()
-                                            .putExtra("Testing", addSum)
-                                    )
-                                    println("HEREEEEE is $result and $addSum")
+//                                    val addSum = viewModel.add(x=value, y = value2)
+                                    lifecycleScope.launch {
+                                        var sumAnswer =
+                                            viewModel.evaluateAddExpression(x = value, y = value2)
+                                        println("ANSWER FROM API IS $sumAnswer")
+                                    }
+
+                                    println("HEREEEEE is and $value $value2")
+
 
                                     Toast.makeText(
                                         context,
                                         "$value + $value2 =" +
-                                                "(${value.toInt()}+${value2.toInt()})",
+                                                "$sumstring",
                                         Toast.LENGTH_SHORT
                                     ).show()
-                                    finish()
                                 }
                             ) {
-                                Text(text = "Testing")
+                                Text(text = "Calculate")
+                                var sumstring = viewModel.result.collectAsState().value
+                                println(" SUMSTRING : $sumstring")
+                            }
+                            Button(onClick = { finish() }) {
+                                Text(text = "MainScreen")
+                                val result = setResult(
+                                    ComponentActivity.RESULT_OK, Intent()
+                                        .putExtra("Testing", sumstring)
+                                )
                             }
                         }
                     }
