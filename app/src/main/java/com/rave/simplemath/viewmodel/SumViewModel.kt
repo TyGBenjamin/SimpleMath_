@@ -29,7 +29,7 @@ class SumViewModel : ViewModel() {
         _sum.update { it.copy(isLoading = true) }
         val expression = "$firstArg%2b$secondArg"
         val sumResponse = MathRepo.evaluateExpression(expression)
-        _sum.update { it.copy(isLoading = false, sum = sumResponse) }
+        _sum.update { it.copy(isLoading = false, sum = sumResponse.toInt()) }
     }
 }
 

@@ -41,8 +41,11 @@ class QuotientActivity : ComponentActivity() {
                 ) {
                     val context = LocalContext.current
                     DisplayIfLoading(quotientState.isLoading)
-                    val expr = EntryScreen(buttonText = "Quotient", buttonColor = Color.Green, "/") {
-                            firstArg, secondArg ->
+                    val expr = EntryScreen(
+                        buttonText = "Quotient",
+                        buttonColor = Color.Green,
+                        "/"
+                    ) { firstArg, secondArg ->
                         quotientViewModel.getQuotient(firstArg, secondArg)
                     }
                     val quotient = quotientState.quotient

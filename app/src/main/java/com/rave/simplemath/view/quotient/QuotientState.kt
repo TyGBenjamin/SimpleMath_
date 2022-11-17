@@ -11,5 +11,5 @@ package com.rave.simplemath.view.quotient
 data class QuotientState(
     val isLoading: Boolean = false,
     val error: String = "",
-    val quotient: Int? = null
+    val quotient: Double? = null
 )

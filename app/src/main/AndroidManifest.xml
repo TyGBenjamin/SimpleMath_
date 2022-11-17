@@ -33,6 +33,7 @@
         <activity android:name=".view.sum.SumActivity" />
         <activity android:name=".view.difference.DifferenceActivity" />
         <activity android:name=".view.product.ProductActivity" />
+        <activity android:name=".view.quotient.QuotientActivity" />
 
 
     </application>
