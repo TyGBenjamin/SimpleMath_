@@ -17,7 +17,7 @@ object MathRepo {
      * @param expr mathematical expression to be evaluated
      * @return evaluation from mathematical expression
      */
-    suspend fun evaluateExpression(expr: String): String {
+    suspend fun evaluateExpression(expr: String): Int {
         return service.evaluateExpression(expr)
     }
 }
