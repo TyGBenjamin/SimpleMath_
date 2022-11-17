@@ -1,7 +1,7 @@
 package com.rave.simplemath.view.quotient
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -13,8 +13,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import com.rave.simplemath.ui.theme.SimpleMathTheme
+import com.rave.simplemath.view.dashboard.DashboardActivity
 import com.rave.simplemath.view.util.DisplayIfLoading
 import com.rave.simplemath.view.util.EntryScreen
 import com.rave.simplemath.viewmodel.QuotientVMFactory
@@ -39,7 +39,6 @@ class QuotientActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val context = LocalContext.current
                     DisplayIfLoading(quotientState.isLoading)
                     val expr = EntryScreen(
                         buttonText = "Quotient",
@@ -51,8 +50,12 @@ class QuotientActivity : ComponentActivity() {
                     val quotient = quotientState.quotient
                     if (quotient != null) {
                         val expressionText = "$expr $quotient"
-                        Toast.makeText(context, expressionText, Toast.LENGTH_SHORT)
-                            .show()
+
+                        val resultIntent = Intent().putExtra(
+                            DashboardActivity.EXPR_RESULT,
+                            expressionText
+                        )
+                        setResult(RESULT_OK, resultIntent)
                         finish()
                     }
                 }

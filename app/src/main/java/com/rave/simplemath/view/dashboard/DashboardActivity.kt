@@ -1,9 +1,13 @@
 package com.rave.simplemath.view.dashboard
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
@@ -24,6 +28,16 @@ import com.rave.simplemath.view.sum.SumActivity
  * @constructor Create new instance of [DashboardActivity]
  */
 class DashboardActivity : ComponentActivity() {
+    val startForResult = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val intent = result.data
+            // Handle the Intent
+            val exprResult = intent?.getStringExtra(EXPR_RESULT) ?: ""
+            Toast.makeText(this, exprResult, Toast.LENGTH_SHORT).show()
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -42,7 +56,7 @@ class DashboardActivity : ComponentActivity() {
                                 // to navigate too
                                 val sumIntent = Intent(context, SumActivity::class.java)
                                 // 2) Pass the intent into the startActivity function
-                                startActivity(sumIntent)
+                                startForResult.launch(sumIntent)
                             }
                         ) {
                             Text(getString(R.string.sum))
@@ -53,7 +67,7 @@ class DashboardActivity : ComponentActivity() {
                                     context,
                                     DifferenceActivity::class.java
                                 )
-                                startActivity(differenceIntent)
+                                startForResult.launch(differenceIntent)
                             }
                         ) {
                             Text("Difference")
@@ -64,7 +78,7 @@ class DashboardActivity : ComponentActivity() {
                                     context,
                                     ProductActivity::class.java
                                 )
-                                startActivity(productIntent)
+                                startForResult.launch(productIntent)
                             }
                         ) {
                             Text("Product")
@@ -75,7 +89,7 @@ class DashboardActivity : ComponentActivity() {
                                     context,
                                     QuotientActivity::class.java
                                 )
-                                startActivity(quotientIntent)
+                                startForResult.launch(quotientIntent)
                             }
                         ) {
                             Text("Quotient")
@@ -84,5 +98,8 @@ class DashboardActivity : ComponentActivity() {
                 }
             }
         }
+    }
+    companion object {
+        const val EXPR_RESULT = "ExprResult"
     }
 }

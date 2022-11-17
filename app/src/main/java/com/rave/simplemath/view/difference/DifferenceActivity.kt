@@ -1,7 +1,7 @@
 package com.rave.simplemath.view.difference
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -13,8 +13,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import com.rave.simplemath.ui.theme.SimpleMathTheme
+import com.rave.simplemath.view.dashboard.DashboardActivity
 import com.rave.simplemath.view.util.DisplayIfLoading
 import com.rave.simplemath.view.util.EntryScreen
 import com.rave.simplemath.viewmodel.DifferenceVMFactory
@@ -39,17 +39,19 @@ class DifferenceActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val context = LocalContext.current
                     DisplayIfLoading(differenceState.isLoading)
                     val expr = EntryScreen("Difference", Color.Blue, "-") { text1, text2 ->
                         differenceViewModel.getDifference(text1, text2)
                     }
                     val difference = differenceState.difference
                     if (difference != null) {
-                        val expressionText =
-                            "$expr $difference"
-                        Toast.makeText(context, expressionText, Toast.LENGTH_SHORT)
-                            .show()
+                        val expressionText = "$expr $difference"
+
+                        val resultIntent = Intent().putExtra(
+                            DashboardActivity.EXPR_RESULT,
+                            expressionText
+                        )
+                        setResult(RESULT_OK, resultIntent)
                         finish()
                     }
                 }
