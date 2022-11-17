@@ -1,4 +1,4 @@
-package com.rave.simplemath.view.sum
+package com.rave.simplemath.view.difference
 
 import android.os.Bundle
 import android.widget.Toast
@@ -30,24 +30,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.rave.simplemath.R
 import com.rave.simplemath.ui.theme.SimpleMathTheme
-import com.rave.simplemath.view.dashboard.DashboardActivity
-import com.rave.simplemath.viewmodel.SumViewModel
+import com.rave.simplemath.viewmodel.DifferenceViewModel
+import com.rave.simplemath.viewmodel.QuotientViewModel
 
-/**
- * Sum activity handles all addition operations.
- *
- * @constructor Create new instance of [SumActivity]
- */
-class SumActivity : ComponentActivity() {
+class DifferenceActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val sumViewModel: SumViewModel by viewModels()
+        val differenceViewModel: DifferenceViewModel by viewModels()
         setContent {
-            val equationState = sumViewModel.equationState.collectAsState().value
+            val equationState = differenceViewModel.equationState.collectAsState().value
             SimpleMathTheme {
                 // A surface container using the 'background' color from the theme
                 Box(
@@ -55,13 +49,13 @@ class SumActivity : ComponentActivity() {
                         .fillMaxSize()
                         .background(
                             Brush.verticalGradient(
-                                0f to Color.DarkGray,
+                                0f to Color.Black,
                                 1000f to Color.White
                             )
                         ),
                     contentAlignment = Alignment.Center
                 ) {
-                    SumScreen(sumViewModel, equationState)
+                    DifferenceScreen(differenceViewModel, equationState)
                 }
             }
         }
@@ -70,15 +64,15 @@ class SumActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SumScreen(sumViewModel: SumViewModel, equationState: Double){
+fun DifferenceScreen(differenceViewModel: DifferenceViewModel, equationState: Double){
 
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally) {
-            val textState = remember { mutableStateOf("") }
-            val secondTextState = remember { mutableStateOf("") }
+        val textState = remember { mutableStateOf("") }
+        val secondTextState = remember { mutableStateOf("") }
         Row(horizontalArrangement = Arrangement.SpaceAround,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth()) {
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()) {
             TextField(
                 value = textState.value,
                 onValueChange = { textState.value = it },
@@ -95,11 +89,11 @@ fun SumScreen(sumViewModel: SumViewModel, equationState: Double){
         Button(
             colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
             onClick = {
-                sumViewModel.EvaluateExpression("${textState.value}+${secondTextState.value}")
+                differenceViewModel.EvaluateExpression("${textState.value}-${secondTextState.value}")
             }
         ) {
-            Text(text = "Evaluate Sum")
+            Text(text = "Evaluate Difference")
         }
-            Text(text = "${equationState}")
+        Text(text = "${equationState}")
     }
 }
