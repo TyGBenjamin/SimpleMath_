@@ -10,4 +10,4 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.7.10' apply false
 }
 
-apply from: "android-config/android.config.gradle.kts"
+//apply from: "android-config/android.config.gradle.kts"
