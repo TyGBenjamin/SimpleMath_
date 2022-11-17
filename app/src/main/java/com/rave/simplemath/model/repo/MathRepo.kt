@@ -1,6 +1,5 @@
 package com.rave.simplemath.model.repo
 
-import com.rave.simplemath.model.remote.MathService
 import com.rave.simplemath.model.remote.RetrofitObject
 
 /**
@@ -9,7 +8,8 @@ import com.rave.simplemath.model.remote.RetrofitObject
  * @constructor Create new [MathRepo]
  */
 object MathRepo {
-    private val service: MathService by lazy { RetrofitObject.getMathService() }
+
+    private val service = RetrofitObject.getMathService()
 
     /**
      * Evaluates mathematical expression passed in.

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">SimpleMath</string>
     <string name="sum">Sum</string>
+    <string name="subtract">Subtract</string>
+    <string name="multiply">Multiply</string>
+    <string name="divide">Divide</string>
 </resources>
