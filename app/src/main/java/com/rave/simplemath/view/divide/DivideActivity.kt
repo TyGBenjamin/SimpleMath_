@@ -25,10 +25,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.lifecycleScope
 import com.rave.simplemath.R
 import com.rave.simplemath.ui.theme.SimpleMathTheme
 import com.rave.simplemath.view.dashboard.Label2
 import com.rave.simplemath.view.multiply.MathScreen
+import com.rave.simplemath.viewmodel.MainViewModel
+import kotlinx.coroutines.launch
 
 /**
  * Divide activity handles division within the application.
@@ -36,6 +39,8 @@ import com.rave.simplemath.view.multiply.MathScreen
  * @constructor Create new instance of [DivideActivity]
  */
 class DivideActivity : ComponentActivity() {
+    val viewModel = MainViewModel()
+
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,11 +95,15 @@ class DivideActivity : ComponentActivity() {
                             bundle.putString("key1", "$value,$value2")
                             Button(
                                 onClick = {
+                                    val doDivide = lifecycleScope.launch {
+                                        viewModel.evaluateDivExpression(x = value, y = value2)
+                                    }
+
                                     val result = setResult(
                                         RESULT_OK, Intent()
-                                            .putExtra("Testing", "$value $value2")
+                                            .putExtra("Testing", "$doDivide")
                                     )
-                                    println("HEREEEEE is $result")
+                                    println("HEREEEEE is $result from i input of $value $value2 ")
 
                                     Toast.makeText(
                                         context,

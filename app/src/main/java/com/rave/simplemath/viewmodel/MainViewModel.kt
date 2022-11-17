@@ -1,8 +1,11 @@
 package com.rave.simplemath.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.rave.simplemath.model.repo.MathRepo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 /**
  * Main view model holding and providing data for the view.
@@ -10,9 +13,51 @@ import kotlinx.coroutines.flow.StateFlow
  * @constructor Create empty Main view model
  */
 class MainViewModel : ViewModel() {
+    private val repo = MathRepo
 
     private val _result = MutableStateFlow("0")
     val result: StateFlow<String> get() = _result
+
+    suspend fun evaluateAddExpression(expr:String,){
+        viewModelScope.launch {
+            _result.value = repo.evaluateExpression(expr)
+            println("THIS IS VALUE OF FLOW ${repo.evaluateExpression(expr)}")
+        }
+    }
+
+    suspend fun evaluateMulExpression(expr:String,){
+        viewModelScope.launch {
+            _result.value = repo.evaluateExpression(expr)
+            println("THIS IS VALUE OF FLOW ${repo.evaluateExpression(expr)}")
+        }
+    }
+
+    suspend fun evaluateSubExpression(expr:String,){
+        viewModelScope.launch {
+
+
+            _result.value = repo.evaluateExpression(expr)
+            println("THIS IS VALUE OF FLOW ${repo.evaluateExpression(expr)}")
+        }
+    }
+
+    suspend fun evaluateDivExpression(x:String, y:String,){
+        viewModelScope.launch {
+        }
+            if (x != "" && y != "") {
+                val newX = x.toInt()
+                val newY = y.toInt()
+                if (newY != 0) {
+                    val long = (newX / newY).toLong()
+                    val input = "$newX/newY"
+                    _result.value = repo.evaluateExpression(input)
+                } else {
+                   var error = "Unable to Compute"
+                }
+
+                println("THIS IS VALUE OF FLOW ${repo.evaluateExpression("$newX/newY")}")
+        }
+    }
 
     /**
      * Addmath operator function.
