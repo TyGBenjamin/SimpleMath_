@@ -1,5 +1,6 @@
 package com.rave.simplemath.model.repo
 
+import android.util.Log
 import com.rave.simplemath.model.remote.MathService
 import com.rave.simplemath.model.remote.RetrofitObject
 
@@ -18,6 +19,11 @@ object MathRepo {
      * @return evaluation from mathematical expression
      */
     suspend fun evaluateExpression(expr: String): String {
-        return service.evaluateExpression(expr)
+//        val expressionResult = service.evaluateExpression(expr)
+//        Log.e("EXPRESSION RESULT!", expressionResult)
+//        return expressionResult
+//        return service.evaluateExpression(expr)
+        val servAnser = service.evaluateExpression(expr)
+        return servAnser
     }
 }
