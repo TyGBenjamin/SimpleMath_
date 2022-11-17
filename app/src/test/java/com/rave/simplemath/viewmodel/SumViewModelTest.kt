@@ -3,7 +3,6 @@ package com.rave.simplemath.viewmodel
 import com.rave.simplemath.model.repo.MathRepo
 import com.rave.simplemath.utilTest.CoroutinesTestExtension
 import io.mockk.coEvery
-import io.mockk.mockk
 import io.mockk.mockkObject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,8 +16,7 @@ import org.junit.jupiter.api.extension.RegisterExtension
 
 internal class SumViewModelTest {
     @RegisterExtension
-    val extension = CoroutinesTestExtension()
-    val repo = mockk<MathRepo>()
+    private val extension = CoroutinesTestExtension()
     val sumVM: SumViewModel = SumViewModel()
 
     @BeforeEach
@@ -32,11 +30,13 @@ internal class SumViewModelTest {
     fun testSumViewModel() = runTest(extension.testDispatcher) {
         // given
         val expected = 4.0
-        coEvery { MathRepo.evaluateExpression("2%b2", Dispatchers.IO) } coAnswers { expected }
+        // %2B is the encoding for +
+        coEvery { MathRepo.evaluateExpression("2%2B2", Dispatchers.IO) } coAnswers { expected }
         // when
         sumVM.getSum("2", "2")
         // then
-        assertFalse(sumVM.sum.value.isLoading)
-        assertEquals(expected.toInt(), sumVM.sum.value.sum)
+        val result = sumVM.sum.value
+        assertFalse(result.isLoading)
+        assertEquals(expected.toInt(), result.sum)
     }
 }

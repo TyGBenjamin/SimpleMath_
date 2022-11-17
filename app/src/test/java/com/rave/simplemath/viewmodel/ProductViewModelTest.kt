@@ -3,7 +3,6 @@ package com.rave.simplemath.viewmodel
 import com.rave.simplemath.model.repo.MathRepo
 import com.rave.simplemath.utilTest.CoroutinesTestExtension
 import io.mockk.coEvery
-import io.mockk.mockk
 import io.mockk.mockkObject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,7 +17,6 @@ import org.junit.jupiter.api.extension.RegisterExtension
 internal class ProductViewModelTest {
     @RegisterExtension
     val extension = CoroutinesTestExtension()
-    val repo = mockk<MathRepo>()
     val productVM: ProductViewModel = ProductViewModel()
 
     @BeforeEach
@@ -36,7 +34,8 @@ internal class ProductViewModelTest {
         // when
         productVM.getProduct("2", "2")
         // then
-        assertFalse(productVM.product.value.isLoading)
-        assertEquals(expected.toInt(), productVM.product.value.product)
+        val result = productVM.product.value
+        assertFalse(result.isLoading)
+        assertEquals(expected.toInt(), result.product)
     }
 }

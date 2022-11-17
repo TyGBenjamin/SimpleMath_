@@ -3,7 +3,6 @@ package com.rave.simplemath.viewmodel
 import com.rave.simplemath.model.repo.MathRepo
 import com.rave.simplemath.utilTest.CoroutinesTestExtension
 import io.mockk.coEvery
-import io.mockk.mockk
 import io.mockk.mockkObject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,7 +17,6 @@ import org.junit.jupiter.api.extension.RegisterExtension
 internal class DifferenceViewModelTest {
     @RegisterExtension
     val extension = CoroutinesTestExtension()
-    val repo = mockk<MathRepo>()
     val differenceVM: DifferenceViewModel = DifferenceViewModel()
 
     @BeforeEach
@@ -36,7 +34,8 @@ internal class DifferenceViewModelTest {
         // when
         differenceVM.getDifference("6", "2")
         // then
-        assertFalse(differenceVM.difference.value.isLoading)
-        assertEquals(expected.toInt(), differenceVM.difference.value.difference)
+        val result = differenceVM.difference.value
+        assertFalse(result.isLoading)
+        assertEquals(expected.toInt(), result.difference)
     }
 }

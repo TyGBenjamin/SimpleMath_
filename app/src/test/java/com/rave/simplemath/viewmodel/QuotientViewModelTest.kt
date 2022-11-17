@@ -3,7 +3,6 @@ package com.rave.simplemath.viewmodel
 import com.rave.simplemath.model.repo.MathRepo
 import com.rave.simplemath.utilTest.CoroutinesTestExtension
 import io.mockk.coEvery
-import io.mockk.mockk
 import io.mockk.mockkObject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,7 +17,6 @@ import org.junit.jupiter.api.extension.RegisterExtension
 internal class QuotientViewModelTest {
     @RegisterExtension
     val extension = CoroutinesTestExtension()
-    val repo = mockk<MathRepo>()
     val quotientVM: QuotientViewModel = QuotientViewModel()
 
     @BeforeEach
@@ -32,11 +30,12 @@ internal class QuotientViewModelTest {
     fun testSumViewModel() = runTest(extension.testDispatcher) {
         // given
         val expected = 4.0
-        coEvery { MathRepo.evaluateExpression("8%F2", Dispatchers.IO) } coAnswers { expected }
+        coEvery { MathRepo.evaluateExpression("8%2F2", Dispatchers.IO) } coAnswers { expected }
         // when
         quotientVM.getQuotient("8", "2")
         // then
-        assertFalse(quotientVM.quotient.value.isLoading)
-        assertEquals(expected, quotientVM.quotient.value.quotient)
+        val result = quotientVM.quotient.value
+        assertFalse(result.isLoading)
+        assertEquals(expected, result.quotient)
     }
 }

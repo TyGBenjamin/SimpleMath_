@@ -28,7 +28,7 @@ class SumViewModel : ViewModel() {
      */
     fun getSum(firstArg: String, secondArg: String) = viewModelScope.launch {
         _sum.update { it.copy(isLoading = true) }
-        val expression = "$firstArg%2b$secondArg"
+        val expression = "$firstArg%2B$secondArg"
         val sumResponse = MathRepo.evaluateExpression(expression, Dispatchers.IO)
         _sum.update { it.copy(isLoading = false, sum = sumResponse.toInt()) }
     }
