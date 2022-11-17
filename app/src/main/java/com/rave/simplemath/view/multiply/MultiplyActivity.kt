@@ -45,8 +45,6 @@ class MultiplyActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val context = LocalContext.current
-
-//            fun setResult(s:String, s2: String) = setResult(RESULT_OK,Intent().putExtra("Testing", "s s2"))
             SimpleMathTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -95,10 +93,8 @@ class MultiplyActivity : ComponentActivity() {
                             // passing the data into the bundle
                             bundle.putString("key1", "$value,$value2")
                             var mulstring = viewModel.result.collectAsState().value
-
                             Button(
                                 onClick = {
-//                                    val addSum = viewModel.add(x=value, y = value2)
                                     lifecycleScope.launch {
                                         var sumAnswer =
                                             viewModel.evaluateMultiplyExpression(x = value, y = value2)
@@ -111,7 +107,6 @@ class MultiplyActivity : ComponentActivity() {
                                         "$value * $value2 = $result",
                                         Toast.LENGTH_SHORT
                                     ).show()
-//                                    finish()
                                 }
                             ) {
                                 Text(text = "Calculate")

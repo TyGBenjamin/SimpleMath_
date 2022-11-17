@@ -88,7 +88,6 @@ class SubtractActivity : ComponentActivity() {
                             var substring = viewModel.result.collectAsState().value
                             Button(
                                 onClick = {
-//                                    val addSum = viewModel.add(x=value, y = value2)
                                     lifecycleScope.launch {
                                         viewModel.evaluateSubExpression(x = value, y = value2)
                                     }

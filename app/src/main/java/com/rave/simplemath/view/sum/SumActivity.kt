@@ -59,7 +59,6 @@ class SumActivity : ComponentActivity() {
                     var value2: String by remember {
                         mutableStateOf("")
                     }
-
                     Box(
                         modifier = Modifier.wrapContentHeight(),
                         contentAlignment = Alignment.Center
@@ -94,7 +93,6 @@ class SumActivity : ComponentActivity() {
 
                             Button(
                                 onClick = {
-//                                    val addSum = viewModel.add(x=value, y = value2)
                                     lifecycleScope.launch {
                                         var sumAnswer =
                                             viewModel.evaluateAddExpression(x = value, y = value2)
