@@ -1,4 +1,4 @@
-package com.rave.simplemath.view.sum
+package com.rave.simplemath.view.quotient
 
 import android.os.Bundle
 import android.widget.Toast
@@ -17,22 +17,22 @@ import androidx.compose.ui.platform.LocalContext
 import com.rave.simplemath.ui.theme.SimpleMathTheme
 import com.rave.simplemath.view.util.DisplayIfLoading
 import com.rave.simplemath.view.util.EntryScreen
-import com.rave.simplemath.viewmodel.SumVMFactory
-import com.rave.simplemath.viewmodel.SumViewModel
+import com.rave.simplemath.viewmodel.QuotientVMFactory
+import com.rave.simplemath.viewmodel.QuotientViewModel
 
 /**
- * Sum activity handles all addition operations.
+ * Quotient activity.
  *
- * @constructor Create new instance of [SumActivity]
+ * @constructor Create empty Quotient activity
  */
-class SumActivity : ComponentActivity() {
-    private val sumViewModel by viewModels<SumViewModel> { SumVMFactory() }
+class QuotientActivity : ComponentActivity() {
+    private val quotientViewModel by viewModels<QuotientViewModel> { QuotientVMFactory() }
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val sumState by sumViewModel.sum.collectAsState()
+            val quotientState by quotientViewModel.quotient.collectAsState()
             SimpleMathTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -40,14 +40,14 @@ class SumActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val context = LocalContext.current
-                    DisplayIfLoading(sumState.isLoading)
-                    val expr = EntryScreen(buttonText = "Sum", buttonColor = Color.Red, "+") {
+                    DisplayIfLoading(quotientState.isLoading)
+                    val expr = EntryScreen(buttonText = "Quotient", buttonColor = Color.Green, "/") {
                             firstArg, secondArg ->
-                        sumViewModel.getSum(firstArg, secondArg)
+                        quotientViewModel.getQuotient(firstArg, secondArg)
                     }
-                    val sum = sumState.sum
-                    if (sum != null) {
-                        val expressionText = "$expr $sum"
+                    val quotient = quotientState.quotient
+                    if (quotient != null) {
+                        val expressionText = "$expr $quotient"
                         Toast.makeText(context, expressionText, Toast.LENGTH_SHORT)
                             .show()
                         finish()

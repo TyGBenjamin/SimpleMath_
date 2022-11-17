@@ -1,4 +1,4 @@
-package com.rave.simplemath.view.sum
+package com.rave.simplemath.view.difference
 
 import android.os.Bundle
 import android.widget.Toast
@@ -17,22 +17,22 @@ import androidx.compose.ui.platform.LocalContext
 import com.rave.simplemath.ui.theme.SimpleMathTheme
 import com.rave.simplemath.view.util.DisplayIfLoading
 import com.rave.simplemath.view.util.EntryScreen
-import com.rave.simplemath.viewmodel.SumVMFactory
-import com.rave.simplemath.viewmodel.SumViewModel
+import com.rave.simplemath.viewmodel.DifferenceVMFactory
+import com.rave.simplemath.viewmodel.DifferenceViewModel
 
 /**
- * Sum activity handles all addition operations.
+ * Difference activity.
  *
- * @constructor Create new instance of [SumActivity]
+ * @constructor Create empty Difference activity
  */
-class SumActivity : ComponentActivity() {
-    private val sumViewModel by viewModels<SumViewModel> { SumVMFactory() }
+class DifferenceActivity : ComponentActivity() {
+    private val differenceViewModel by viewModels<DifferenceViewModel> { DifferenceVMFactory() }
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val sumState by sumViewModel.sum.collectAsState()
+            val differenceState by differenceViewModel.difference.collectAsState()
             SimpleMathTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -40,14 +40,14 @@ class SumActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val context = LocalContext.current
-                    DisplayIfLoading(sumState.isLoading)
-                    val expr = EntryScreen(buttonText = "Sum", buttonColor = Color.Red, "+") {
-                            firstArg, secondArg ->
-                        sumViewModel.getSum(firstArg, secondArg)
+                    DisplayIfLoading(differenceState.isLoading)
+                    val expr = EntryScreen("Difference", Color.Blue, "-") { text1, text2 ->
+                        differenceViewModel.getDifference(text1, text2)
                     }
-                    val sum = sumState.sum
-                    if (sum != null) {
-                        val expressionText = "$expr $sum"
+                    val difference = differenceState.difference
+                    if (difference != null) {
+                        val expressionText =
+                            "$expr $difference"
                         Toast.makeText(context, expressionText, Toast.LENGTH_SHORT)
                             .show()
                         finish()

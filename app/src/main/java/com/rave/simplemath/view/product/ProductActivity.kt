@@ -1,4 +1,4 @@
-package com.rave.simplemath.view.sum
+package com.rave.simplemath.view.product
 
 import android.os.Bundle
 import android.widget.Toast
@@ -17,22 +17,22 @@ import androidx.compose.ui.platform.LocalContext
 import com.rave.simplemath.ui.theme.SimpleMathTheme
 import com.rave.simplemath.view.util.DisplayIfLoading
 import com.rave.simplemath.view.util.EntryScreen
-import com.rave.simplemath.viewmodel.SumVMFactory
-import com.rave.simplemath.viewmodel.SumViewModel
+import com.rave.simplemath.viewmodel.ProductVMFactory
+import com.rave.simplemath.viewmodel.ProductViewModel
 
 /**
- * Sum activity handles all addition operations.
+ * Product activity.
  *
- * @constructor Create new instance of [SumActivity]
+ * @constructor Create empty Product activity
  */
-class SumActivity : ComponentActivity() {
-    private val sumViewModel by viewModels<SumViewModel> { SumVMFactory() }
+class ProductActivity : ComponentActivity() {
+    private val productViewModel by viewModels<ProductViewModel> { ProductVMFactory() }
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val sumState by sumViewModel.sum.collectAsState()
+            val productState by productViewModel.product.collectAsState()
             SimpleMathTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -40,14 +40,14 @@ class SumActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val context = LocalContext.current
-                    DisplayIfLoading(sumState.isLoading)
-                    val expr = EntryScreen(buttonText = "Sum", buttonColor = Color.Red, "+") {
-                            firstArg, secondArg ->
-                        sumViewModel.getSum(firstArg, secondArg)
+                    DisplayIfLoading(productState.isLoading)
+                    val expr = EntryScreen("Product", Color.Cyan, "*") { text1, text2 ->
+                        productViewModel.getProduct(text1, text2)
                     }
-                    val sum = sumState.sum
-                    if (sum != null) {
-                        val expressionText = "$expr $sum"
+                    val product = productState.product
+                    if (product != null) {
+                        val expressionText =
+                            "$expr $product"
                         Toast.makeText(context, expressionText, Toast.LENGTH_SHORT)
                             .show()
                         finish()

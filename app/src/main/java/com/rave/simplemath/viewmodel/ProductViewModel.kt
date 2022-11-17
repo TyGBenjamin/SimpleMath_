@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.rave.simplemath.model.repo.MathRepo
-import com.rave.simplemath.view.sum.SumState
+import com.rave.simplemath.view.product.ProductState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -15,9 +15,9 @@ import kotlinx.coroutines.launch
  *
  * @constructor Create empty Sum view model
  */
-class SumViewModel : ViewModel() {
-    private val _sum: MutableStateFlow<SumState> = MutableStateFlow(SumState())
-    val sum: StateFlow<SumState> get() = _sum
+class ProductViewModel : ViewModel() {
+    private val _product: MutableStateFlow<ProductState> = MutableStateFlow(ProductState())
+    val product: StateFlow<ProductState> get() = _product
 
     /**
      * Get sum.
@@ -25,11 +25,11 @@ class SumViewModel : ViewModel() {
      * @param firstArg
      * @param secondArg
      */
-    fun getSum(firstArg: String, secondArg: String) = viewModelScope.launch {
-        _sum.update { it.copy(isLoading = true) }
-        val expression = "$firstArg%2b$secondArg"
-        val sumResponse = MathRepo.evaluateExpression(expression)
-        _sum.update { it.copy(isLoading = false, sum = sumResponse) }
+    fun getProduct(firstArg: String, secondArg: String) = viewModelScope.launch {
+        _product.update { it.copy(isLoading = true) }
+        val expression = "$firstArg*$secondArg"
+        val productResponse = MathRepo.evaluateExpression(expression)
+        _product.update { it.copy(isLoading = false, product = productResponse) }
     }
 }
 
@@ -38,8 +38,8 @@ class SumViewModel : ViewModel() {
  *
  * @constructor Create empty V m factory
  */
-class SumVMFactory : ViewModelProvider.Factory {
+class ProductVMFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return SumViewModel() as T
+        return ProductViewModel() as T
     }
 }
