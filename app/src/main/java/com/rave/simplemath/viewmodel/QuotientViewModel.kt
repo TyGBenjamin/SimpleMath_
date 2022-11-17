@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.rave.simplemath.model.repo.MathRepo
 import com.rave.simplemath.view.quotient.QuotientState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -28,7 +29,7 @@ class QuotientViewModel : ViewModel() {
     fun getQuotient(firstArg: String, secondArg: String) = viewModelScope.launch {
         _quotient.update { it.copy(isLoading = true) }
         val expression = "$firstArg%2F$secondArg"
-        val quotientResponse = MathRepo.evaluateExpression(expression)
+        val quotientResponse = MathRepo.evaluateExpression(expression, Dispatchers.IO)
         _quotient.update { it.copy(isLoading = false, quotient = quotientResponse) }
     }
 }

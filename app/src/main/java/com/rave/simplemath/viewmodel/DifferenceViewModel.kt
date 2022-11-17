@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.rave.simplemath.model.repo.MathRepo
 import com.rave.simplemath.view.difference.DifferenceState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -28,7 +29,7 @@ class DifferenceViewModel : ViewModel() {
     fun getDifference(firstArg: String, secondArg: String) = viewModelScope.launch {
         _difference.update { it.copy(isLoading = true) }
         val expression = "$firstArg-$secondArg"
-        val differenceResponse = MathRepo.evaluateExpression(expression)
+        val differenceResponse = MathRepo.evaluateExpression(expression, Dispatchers.IO)
         _difference.update { it.copy(isLoading = false, difference = differenceResponse.toInt()) }
     }
 }

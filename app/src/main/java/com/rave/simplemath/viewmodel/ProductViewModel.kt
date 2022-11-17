@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.rave.simplemath.model.repo.MathRepo
 import com.rave.simplemath.view.product.ProductState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -28,7 +29,7 @@ class ProductViewModel : ViewModel() {
     fun getProduct(firstArg: String, secondArg: String) = viewModelScope.launch {
         _product.update { it.copy(isLoading = true) }
         val expression = "$firstArg*$secondArg"
-        val productResponse = MathRepo.evaluateExpression(expression)
+        val productResponse = MathRepo.evaluateExpression(expression, Dispatchers.IO)
         _product.update { it.copy(isLoading = false, product = productResponse.toInt()) }
     }
 }

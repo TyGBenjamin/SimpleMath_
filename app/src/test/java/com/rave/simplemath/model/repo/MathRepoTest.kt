@@ -33,11 +33,11 @@ internal class MathRepoTest {
     fun testEvaluateExpression() = runTest(extension.testDispatcher) {
         // Given
         val expr = "2+2"
-        val result = 4
+        val result = 4.0
         coEvery { mockService.evaluateExpression(expr) } coAnswers { result }
 
         // When
-        val testResult = MathRepo.evaluateExpression(expr)
+        val testResult = MathRepo.evaluateExpression(expr, extension.testDispatcher)
 
         // Then
         Assertions.assertEquals(result, testResult)

@@ -2,6 +2,8 @@ package com.rave.simplemath.model.repo
 
 import com.rave.simplemath.model.remote.MathService
 import com.rave.simplemath.model.remote.RetrofitObject
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 
 /**
  * Repository to evaluate math expressions.
@@ -15,9 +17,10 @@ object MathRepo {
      * Evaluates mathematical expression passed in.
      *
      * @param expr mathematical expression to be evaluated
+     * @param context the thread to be used
      * @return evaluation from mathematical expression
      */
-    suspend fun evaluateExpression(expr: String): Double {
-        return service.evaluateExpression(expr)
+    suspend fun evaluateExpression(expr: String, context: CoroutineDispatcher): Double = withContext(context) {
+        return@withContext service.evaluateExpression(expr)
     }
 }

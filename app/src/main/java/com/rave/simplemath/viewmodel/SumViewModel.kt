@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.rave.simplemath.model.repo.MathRepo
 import com.rave.simplemath.view.sum.SumState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -28,7 +29,7 @@ class SumViewModel : ViewModel() {
     fun getSum(firstArg: String, secondArg: String) = viewModelScope.launch {
         _sum.update { it.copy(isLoading = true) }
         val expression = "$firstArg%2b$secondArg"
-        val sumResponse = MathRepo.evaluateExpression(expression)
+        val sumResponse = MathRepo.evaluateExpression(expression, Dispatchers.IO)
         _sum.update { it.copy(isLoading = false, sum = sumResponse.toInt()) }
     }
 }

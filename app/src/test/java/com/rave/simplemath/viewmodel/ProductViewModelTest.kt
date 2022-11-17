@@ -5,6 +5,7 @@ import com.rave.simplemath.utilTest.CoroutinesTestExtension
 import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.mockkObject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -31,7 +32,7 @@ internal class ProductViewModelTest {
     fun testProductViewModel() = runTest(extension.testDispatcher) {
         // given
         val expected = 4.0
-        coEvery { MathRepo.evaluateExpression("2*2") } coAnswers { expected }
+        coEvery { MathRepo.evaluateExpression("2*2", Dispatchers.IO) } coAnswers { expected }
         // when
         productVM.getProduct("2", "2")
         // then

@@ -5,9 +5,11 @@ import com.rave.simplemath.utilTest.CoroutinesTestExtension
 import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.mockkObject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -30,11 +32,11 @@ internal class QuotientViewModelTest {
     fun testSumViewModel() = runTest(extension.testDispatcher) {
         // given
         val expected = 4.0
-        coEvery { MathRepo.evaluateExpression("8%F2") } coAnswers { expected }
+        coEvery { MathRepo.evaluateExpression("8%F2", Dispatchers.IO) } coAnswers { expected }
         // when
         quotientVM.getQuotient("8", "2")
         // then
-        // assertFalse(quotientVM.quotient.value.isLoading)
+        assertFalse(quotientVM.quotient.value.isLoading)
         assertEquals(expected, quotientVM.quotient.value.quotient)
     }
 }
