@@ -32,7 +32,8 @@ class DashboardActivity : ComponentActivity() {
                     Button(
                         onClick = {
                             // Navigating to a new activity
-                            // 1) Create new Explicit Intent passing in the Activity class reference to navigate too
+                            // 1) Create new Explicit Intent passing in the Activity class reference
+                            // to navigate too
                             val sumIntent = Intent(this, SumActivity::class.java)
                             // 2) Pass the intent into the startActivity function
                             startActivity(sumIntent)

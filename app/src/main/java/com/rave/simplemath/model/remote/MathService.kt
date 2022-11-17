@@ -10,6 +10,10 @@ import retrofit2.http.Query
  */
 interface MathService {
 
-    @GET
-    suspend fun evaluateExpression(@Query("expr", encoded = true) expr: String): String
+    @GET(VERSION)
+    suspend fun evaluateExpression(@Query("expr", encoded = true) expr: String): Int
+
+    companion object {
+        private const val VERSION = "v4/"
+    }
 }

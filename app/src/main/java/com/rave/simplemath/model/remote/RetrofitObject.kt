@@ -14,13 +14,12 @@ import retrofit2.create
  */
 object RetrofitObject {
     // Example: http://api.mathjs.org/v4/?expr=2%2B2
-    private const val BASE_URL = "http://api.mathjs.org/"
-    private const val VERSION = "v4/"
+    private const val BASE_URL = "https://api.mathjs.org/"
     private val contentType: MediaType = MediaType.get("application/json")
 
     @OptIn(ExperimentalSerializationApi::class)
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL + VERSION)
+        .baseUrl(BASE_URL)
         .addConverterFactory(Json.asConverterFactory(contentType))
         .build()
 
